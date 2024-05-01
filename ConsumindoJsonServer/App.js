@@ -10,7 +10,7 @@ const App = () => {
 
   const buscarPorGenero = async () => {
     try {
-      const response = await axios.get(`http://192.168.1.5:3000/filmes`);
+      const response = await axios.get(`http://10.136.63.228:3000/filmes`);
       console.log(response.data);
       if (response.data && response.data.length > 0) {
         const todosOsFilmes = response.data[0];
