@@ -8,22 +8,23 @@ const App = () => {
   const [erro, setErro] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
 
-  const buscarFilmePorGenero = async () => {
+  const buscarPorGenero = async () => {
     try {
-      const response = await axios.get(`http://10.136.63.228:3000/filmes`);
+      const response = await axios.get(`http://192.168.1.5:3000/filmes`);
       console.log(response.data);
       if (response.data && response.data.length > 0) {
-        const filmesFiltrados = response.data.filter(filme =>
-          filme.Genre.toLowerCase().includes(generoFilme.toLowerCase())
-        );
-        console.log(filmesFiltrados);
+        const todosOsFilmes = response.data[0];
+        console.log(todosOsFilmes);
+        const filmesFiltrados = todosOsFilmes.filter(filme => {
+          return filme.Genre.toLowerCase().includes(generoFilme.toLowerCase());
+        });
         if (filmesFiltrados.length > 0) {
           setFilmesEncontrados(filmesFiltrados);
           setErro('');
           setModalVisible(true);
         } else {
           setFilmesEncontrados([]);
-          setErro('Nenhum filme encontrado.');
+          setErro('Nenhum filme encontrado para o gênero especificado.');
         }
       } else {
         setFilmesEncontrados([]);
@@ -49,7 +50,7 @@ const App = () => {
       />
       <Button
         title="Buscar"
-        onPress={buscarFilmePorGenero}
+        onPress={buscarPorGenero}
       />
       {erro ? <Text style={styles.error}>{erro}</Text> : null}
 
